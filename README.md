@@ -19,6 +19,27 @@ Liste des catégories:
 - Stéganographie
 - Web
 
+## Comment utiliser ce repo?
+
+```text
+➜  LABOCTF_2025 git:(main) tree
+.
+├── challenges      => Répertoire pour les challenges
+│   ├── crypto
+│   ├── forensics
+│   ├── misc
+│   ├── network
+│   ├── osint
+│   ├── prog
+│   ├── pwn
+│   ├── rev
+│   ├── steg
+│   └── web
+├── CTFd            => Répertoire pour la configuration de l'interface CTFd
+├── LICENSE
+└── README.md
+```
+
 ## Règles
 
 ### Interdiction de brute-force
