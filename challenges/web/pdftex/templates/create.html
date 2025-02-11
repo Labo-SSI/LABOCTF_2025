@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Page</title>
+</head>
+<body>
+    <h1>Create Content</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <label>Title:</label>
+        <textarea name="content" rows="5" cols="50" required name="Title"></textarea><br>
+        <label>Design:</label>
+        <textarea name="content" rows="5" cols="50" required name="Design"></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+    {{send}}
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
