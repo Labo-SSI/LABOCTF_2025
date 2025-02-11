@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, send_file
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -79,7 +79,9 @@ def login():
 def create():
     form = CreateForm()
     if request.method == 'POST':
-        content = request.form['content']
+        title = form.title.data
+        design = form.design.data
+        print(title, design)
         flash("Content created successfully!", "success")
         return render_template('create.html', form=form, send="design created")
     return render_template('create.html', form=form)
