@@ -4,11 +4,15 @@ from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import subprocess
 from forms import RegisterForm, LoginForm, CreateForm
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  
 csrf = CSRFProtect(app)
+
+UPLOAD_FOLDER = "files"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'your_username'
@@ -81,9 +85,32 @@ def create():
     if request.method == 'POST':
         title = form.title.data
         design = form.design.data
-        print(title, design)
-        flash("Content created successfully!", "success")
-        return render_template('create.html', form=form, send="design created")
+        tex_content = f"""
+        \\documentclass{{article}}
+        \\begin{{document}}
+        {title}
+
+        \\begin{{picture}}(100,100)
+
+        {design}
+
+        \\end{{picture}}
+
+        \\end{{document}}
+        """
+        
+        tex_path = os.path.join(UPLOAD_FOLDER, "main.tex")
+        pdf_path = os.path.join(UPLOAD_FOLDER, "main.pdf")
+        
+        with open(tex_path, "w") as tex_file:
+            tex_file.write(tex_content)
+        
+        subprocess.run(
+            ["pdflatex", "--interaction=nonstopmode", "-output-directory", UPLOAD_FOLDER, tex_path],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
+
+        return send_file(pdf_path, as_attachment=True)
     return render_template('create.html', form=form)
 
 @app.route('/logout')
