@@ -29,6 +29,10 @@ class User(UserMixin):
         self.id = id
         self.username = username
 
+blacklist = ["begin", "input", "include", "newread", "openin", "read", "closein", "text", "lstinputlisting", 
+"usepackage", "verbatiminput", "catcode", "lstin", "newwrite", "openout", "write", "immediate", "url", "href", 
+"pdffiledump", "write18", "renewcommand", "dagger", "outfile", "loop"]
+
 @login_manager.user_loader
 def load_user(user_id):
     cursor = mysql.connection.cursor()
@@ -85,6 +89,11 @@ def create():
     if request.method == 'POST':
         title = form.title.data
         design = form.design.data
+        for item in blacklist:
+            if item in title.lower():
+                title = "Not allowed"
+            if item in design.lower():
+                design = "Not allowed"
         tex_content = f"""
         \\documentclass{{article}}
         \\begin{{document}}
