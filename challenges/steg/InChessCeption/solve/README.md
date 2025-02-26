@@ -62,22 +62,45 @@ steghide extract -sf chall.jpg -p "1. Ta6 bxa6 2. b7#"
 
 Nous obtenons alors le fichier [game.pgn](../sources/game.pgn)
 
+### Quatrième étape: analyse du fichier [game.pgn](../sources/game.pgn)
+
+Le fichier [game.pgn](../sources/game.pgn) est au format PGN, qui est un format standard de stockage des coups joués pendant une partie d'échecs.
+
+On remarque un commentaire à la fin, qui fait mention de `Chess Steganography`. Une recherche Google à ce sujet permet de trouver rapidement & facilement l'un des outils suivants:
+
+- <https://github.com/jes/chess-steg>
+- <https://github.com/Alheimsins/chess-steg-cli>
+- <https://incoherency.co.uk/chess-steg/>
+
+L'utilisation de l'un de ces outils nous permet d'obtenir le flag, ici `chess-steg-cli`:
+
+```bash
+chess-steg -u "$(cat game.pgn)"
+```
+
 ## Indices & informations sur le challenge
 
 Indices step 1:
 
 > Procédez à une analyse statique de l'image. Connaissez-vous les commandes `strings` et `exiftool`?
-> Êtes-vous mauvais aux échecs? <https://lichess.org/analysis> et <https://www.chess.com/analysis> devraient vous aider.
 
 Indice step 2:
 
+> Êtes-vous mauvais aux échecs? <https://lichess.org/analysis> et <https://www.chess.com/analysis> devraient vous aider.
+
+Indice step 3:
+
 > Connaissez-vous `steghide`? Un moyen très commun de le détecter est en utilisant `stegseek` avec son option `seed`.
+
+Indice step 4:
+
+> Lisez le fichier PGN, un indice se cache à la fin. Avez-vous cherché un outil qui ferait ceci? LMGTFY...
 
 ## Flag
 
 `LABOCTF{Checkm8_4n4lysis}`
 
-## Ouverturee, aller plus loin
+## Ouverture, aller plus loin
 
 Pour rendre ce challenge plus compliqué, ou ajouter des étapes:
 
