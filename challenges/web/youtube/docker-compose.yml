@@ -1,0 +1,6 @@
+services:
+  youtube:
+      build: .
+      container_name: youtube
+      ports:
+        - "5000:5000"

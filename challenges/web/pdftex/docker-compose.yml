@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: your_database
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  python_app:
+    build: .
+    container_name: python_app
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: your_username
+      DB_PASSWORD: your_password
+      DB_NAME: your_database
+    ports:
+      - "5000:5000"
+
+volumes:
+  mysql_data:
