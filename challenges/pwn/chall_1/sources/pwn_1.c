@@ -17,6 +17,9 @@ void win() {
 }
 
 int main() {
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stdin, NULL, _IONBF, 0);
+    
     char password[10];
 
     printf("Vas-y, tape ton précieux mot de passe... si tu l'oses ! Voyons voir si tu arrives à te connecter ahaha\n");

