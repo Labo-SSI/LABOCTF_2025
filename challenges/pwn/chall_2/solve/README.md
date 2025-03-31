@@ -42,7 +42,7 @@ test
 
 Cette fois-ci pas de buffer overflow mais un [format string](https://ctf101.org/binary-exploitation/what-is-a-format-string-vulnerability/) : `printf(user_input);`.
 
-Le programme ouvre aussi un fichier `flag.txt` sans en afficher le contenu. Essayons d'en exfiltere le contenu avec le format string.
+Le programme ouvre aussi un fichier `flag.txt` sans en afficher le contenu. Essayons d'en exfiltrer le contenu avec le format string.
 
 ## Analyse dynamique
 
@@ -113,6 +113,11 @@ $ python3 solve.py
 Flag : b'SSI{TESTING_THIS}\n'
 ```
 
-Plus qu'à lancer sur le serveur :
+Plus qu'à lancer sur le serveur avec ce [script](./solve.py) :
 
-## TO DO
+```console
+$ python3 ./solve.py 
+[+] Opening connection to localhost on port 9696: Done
+Flag : b'LABO{OweBopjnGfAQGU7WHdi+}\n'
+[*] Closed connection to localhost port 9696
+```
