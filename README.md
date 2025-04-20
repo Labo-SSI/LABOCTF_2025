@@ -88,3 +88,18 @@ L’utilisation d’outils automatisés ou de scripts est permise si cela respec
 
 Les organisateurs se réservent le droit de prendre des décisions finales concernant toute violation des règles ou toute situation imprévue.
 Toute infraction flagrante peut entraîner une disqualification immédiate.
+
+## Avancement
+
+Challs:
+
+1. Cryptographie        0/3
+2. Analyse Forensique   0/3
+3. Miscellaneous        0/3
+4. Réseau               0/3
+5. OSINT                0/3
+6. Programmation        0.5/3
+7. Pwn                  0/3
+8. Reverse Engineering  0/3
+9. Stéganographie       1.5/3
+10. Web                 0/3
