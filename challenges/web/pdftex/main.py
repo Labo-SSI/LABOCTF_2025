@@ -6,9 +6,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import subprocess
 from forms import RegisterForm, LoginForm, CreateForm
-
+import secrets
 app = Flask(__name__)
-app.secret_key = os.urandom(24)  
+app.secret_key = secrets.token_urlsafe(128) 
 csrf = CSRFProtect(app)
 
 UPLOAD_FOLDER = "files"

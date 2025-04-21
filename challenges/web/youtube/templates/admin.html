@@ -8,11 +8,10 @@
 <body>
     <h1>Admin - Submitted URLs</h1>
     {% if session.logged_in %}
-        <p><a href="{{ url_for('logout') }}">Logout</a></p>
         <ul>
             {% for url in urls %}
                 <li>
-                    <a href="{{ url.url }}">{{ url.url }}</a>
+                    <a href="{{ url.url }}">{{ url.uuid }}</a>
                     (submitted at {{ url.timestamp.strftime('%Y-%m-%d %H:%M:%S') }})
                 </li>
             {% endfor %}

@@ -1,17 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your-secret-key'  # Change this to a secure key in production
+app.config['SECRET_KEY'] = 'your-secret-key'  
 db = SQLAlchemy(app)
 
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String(2083), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    uuid = db.Column(db.String(128), nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -29,7 +31,7 @@ def submit():
     except ValueError:
         flash('Invalid YouTube video.', 'error')
         return redirect(url_for('home'))
-    new_url = URL(url=url)
+    new_url = URL(url=url, uuid=str(uuid.uuid4()))
     db.session.add(new_url)
     db.session.commit()
     flash('URL submitted successfully!', 'success')

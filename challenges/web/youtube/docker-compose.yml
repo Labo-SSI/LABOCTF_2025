@@ -1,6 +1,22 @@
 services:
   youtube:
-      build: .
-      container_name: youtube
-      ports:
-        - "5000:5000"
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      xss-net:
+        ipv4_address: 172.20.0.2
+
+  bot:
+    build: ./bot
+    depends_on:
+      - youtube
+    networks:
+      - xss-net
+
+networks:
+  xss-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
