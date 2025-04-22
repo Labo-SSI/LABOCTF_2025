@@ -5,7 +5,7 @@ context.log_level = "error"
 
 # p = process(["python", "server.py"])
 
-p = remote("127.0.0.1", 10101)
+p = remote("52.47.193.56", 10101)
 
 token = p.recvuntil(b": ")
 
