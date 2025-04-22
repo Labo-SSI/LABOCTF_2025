@@ -9,7 +9,7 @@ services:
     cap_add:
       - SYS_PTRACE
     volumes:
-      - ./app/app
+      - ./app:/app/app
 
 volumes:
   mysql_data:
