@@ -25,6 +25,7 @@ services:
       DB_NAME: your_database
     ports:
       - "10799:5000"
+    restart: unless-stopped
 
 volumes:
   mysql_data:
