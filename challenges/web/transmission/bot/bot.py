@@ -26,14 +26,14 @@ def process_page(driver):
 
         admin_url = "http://172.234.0.2:5000/admin"
         driver.get(admin_url)
-
+        
         driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
-
+        
         driver.get(admin_url)
         time.sleep(1)
 
         links = driver.find_elements(By.TAG_NAME, "a")
-
+        log(f"links are {links}")
         new_links_found = False
 
         for i in range(len(links)):
