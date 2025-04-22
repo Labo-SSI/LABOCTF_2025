@@ -117,7 +117,7 @@ def main_loop():
                     password = driver.find_element(By.NAME, "password")
                     
                     username.send_keys("admin")
-                    password.send_keys("password")
+                    password.send_keys("jVYmJ^LnDz$fu9&d%AXiDRBtD@j#xk")
                     password.submit()
                     time.sleep(3)
                     
