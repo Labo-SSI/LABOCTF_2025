@@ -1,3 +1,4 @@
+# difficulté: Medium
 # flag: LABO{Mathi4s_w0uld_b_Pr0ud}
 
 
