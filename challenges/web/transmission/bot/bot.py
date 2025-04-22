@@ -25,7 +25,7 @@ def process_page(driver):
         admin_url = "http://172.20.0.2:5000/admin"
         driver.get(admin_url)
 
-        driver.add_cookie({"name": "key", "value": "value"})
+        driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
 
         driver.get(admin_url)
         time.sleep(1)
@@ -70,7 +70,7 @@ def process_page(driver):
                 driver.switch_to.new_window("tab")
                 try:
                     driver.get(href)
-                    driver.add_cookie({"name": "key", "value": "value"})
+                    driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
                     time.sleep(2)
                 except Exception as e:
                     log(f"[!] Error visiting URL: {e}", "WARNING")
