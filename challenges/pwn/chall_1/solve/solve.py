@@ -1,7 +1,7 @@
 from pwn import *
 
 ip = "localhost"
-port = 6969
+port = 10420
 
 system = 0x004011c9
 
