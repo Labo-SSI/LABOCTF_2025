@@ -42,7 +42,7 @@ def admin():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username == 'admin' and password == 'jVYmJ^LnDz$fu9&d%AXiDRBtD@j#xk':
+        if username == 'admin' and password == 'password':
             session['logged_in'] = True
             return redirect(url_for('admin'))
         else:

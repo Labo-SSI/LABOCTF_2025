@@ -5,7 +5,7 @@ services:
       - "10901:5000"
     networks:
       xss-net:
-        ipv4_address: 172.230.0.2
+        ipv4_address: 172.230.0.5
 
   bot:
     build: ./bot
