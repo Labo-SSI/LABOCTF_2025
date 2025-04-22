@@ -2,7 +2,7 @@ services:
   youtube:
     build: .
     ports:
-      - "10900-10950:5000"
+      - "10901:5000"
     networks:
       xss-net:
         ipv4_address: 172.230.0.2
