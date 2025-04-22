@@ -24,7 +24,7 @@ def process_page(driver):
     try:
         log("Processing page...")
 
-        admin_url = "http://172.20.234.2:5000/admin"
+        admin_url = "http://172.234.0.2:5000/admin"
         driver.get(admin_url)
 
         driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
@@ -113,7 +113,7 @@ def main_loop():
             driver = webdriver.Chrome(service=service, options=options)
             driver.implicitly_wait(15)
 
-            test = driver.get("http://172.20.234.2:5000/admin")
+            test = driver.get("http://172.234.0.2:5000/admin")
             log(driver.current_url.lower())
             if "admin" in driver.current_url.lower():
                 try:
