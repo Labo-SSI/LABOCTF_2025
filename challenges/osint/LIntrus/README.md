@@ -1,5 +1,5 @@
 # L'intrus
 
-Un intrus a infiltré le serveur Discord du Labo!
+Un intrus s'est infiltré dans le serveur Discord du Labo!
 
 Retrouvez sa trace pour obtenir le flag.
