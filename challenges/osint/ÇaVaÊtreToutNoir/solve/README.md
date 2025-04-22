@@ -28,6 +28,12 @@ Ces sources évoquent le Vasa-Museet (musée Vasa en Suédois).
 
 ## Analyse de l'audio
 
+### Détection de la langue, attention
+
+Certains traducteurs reconnaissent le langage comme du norvégien. Le norvégien est une langue très proche du suédois et partage de nombreux mots et éléments grammaticaux. Cela peut induire en erreur et laisser penser que l'image est en Norvège.
+
+### Analyse de l'audio et traduction
+
 Le fichier audio ([message vocal](../sources/voice_message.wav)) est un enregistrement en suédois. Une transcription speech-to-text (<https://www.speech-to-text.cloud/>) nous permet de récupérer le contenu de l'audio afin de le traduire:
 
 > [00:00:00 - 00:00:02] Hej älskling!
@@ -50,7 +56,7 @@ Qui nous donne, une fois traduit:
 
 - Il reste 41 minutes de transport à Paul
 - Il a 6 arrêts avant d'arriver vers son hôtel
-- Il avait le mal de mer ce matin
+- Il avait le mal de mer ce matin (est-ce à cause du transport?)
 - Il parle d'une visite
 
 La visite confirme qu'il était dans un musée (comme évoqué plus haut).
