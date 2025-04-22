@@ -9,7 +9,6 @@ import urllib.parse
 
 seen_links = set()
 
-
 def log(message, level="INFO"):
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     full_message = f"[{timestamp}] [{level}] {message}\n"
@@ -19,21 +18,20 @@ def log(message, level="INFO"):
 
 seen_links = set()
 
-
 def process_page(driver):
     try:
         log("Processing page...")
 
-        admin_url = "http://172.234.0.2:5000/admin"
+        admin_url = "http://172.230.0.5:5000/admin"
         driver.get(admin_url)
-        
+
         driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
-        
+
         driver.get(admin_url)
         time.sleep(1)
 
         links = driver.find_elements(By.TAG_NAME, "a")
-        log(f"links are {links}")
+
         new_links_found = False
 
         for i in range(len(links)):
@@ -48,7 +46,7 @@ def process_page(driver):
             uuid_text = link.text.strip()
 
             if uuid_text in seen_links:
-                continue
+                continue  
 
             seen_links.add(uuid_text)
             new_links_found = True
@@ -72,9 +70,7 @@ def process_page(driver):
                 driver.switch_to.new_window("tab")
                 try:
                     driver.get(href)
-                    driver.add_cookie(
-                        {"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"}
-                    )
+                    driver.add_cookie({"name": "flag", "value": "LABO{EtRaNg3_C3_l1eN_Y0u7UB3}"})
                     time.sleep(2)
                 except Exception as e:
                     log(f"[!] Error visiting URL: {e}", "WARNING")
@@ -89,65 +85,64 @@ def process_page(driver):
     except Exception as e:
         log(f"Page processing error: {str(e)}", "ERROR")
 
-
 def main_loop():
     while True:
         driver = None
         try:
             options = webdriver.ChromeOptions()
-
-            options.add_argument("--disable-web-security")
-            options.add_argument("--disable-site-isolation-trials")
-            options.add_argument("--disable-features=SameSiteByDefaultCookies")
-
+            
+            options.add_argument('--disable-web-security')
+            options.add_argument('--disable-site-isolation-trials')
+            options.add_argument('--disable-features=SameSiteByDefaultCookies')
+            
             options.add_argument("--headless=new")
             options.add_argument("--no-sandbox")
             options.add_argument("--disable-dev-shm-usage")
-
+            
             options.add_argument("--disable-xss-auditor")
-
+            
             service = Service(
-                ChromeDriverManager().install(), service_args=["--verbose"]
+                ChromeDriverManager().install(),
+                service_args=['--verbose']
             )
-
+            
             driver = webdriver.Chrome(service=service, options=options)
             driver.implicitly_wait(15)
 
-            test = driver.get("http://172.234.0.2:5000/admin")
+            test = driver.get("http://172.230.0.5:5000/admin")
             log(driver.current_url.lower())
             if "admin" in driver.current_url.lower():
                 try:
                     username = driver.find_element(By.NAME, "username")
                     password = driver.find_element(By.NAME, "password")
-
+                    
                     username.send_keys("admin")
-                    password.send_keys("jVYmJ^LnDz$fu9&d%AXiDRBtD@j#xk")
+                    password.send_keys("password")
                     password.submit()
                     time.sleep(3)
-
+                    
                     if "login" in driver.current_url.lower():
                         log("Login failed", "ERROR")
                         return
-
+                        
                 except WebDriverException as e:
                     log(f"Login error: {str(e)}", "ERROR")
                     return
-
+            
             process_page(driver)
-
+            
         except Exception as e:
             log(f"Main loop error: {str(e)}", "ERROR")
-
+            
         finally:
             if driver:
                 try:
                     driver.quit()
                 except Exception as e:
                     log(f"Driver quit error: {str(e)}", "WARNING")
-
+            
             log("Sleeping for 60 seconds...")
             time.sleep(60)
-
 
 if __name__ == "__main__":
     log("Starting XSS Challenge Bot")
