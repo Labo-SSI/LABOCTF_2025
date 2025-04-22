@@ -24,7 +24,7 @@ services:
       DB_PASSWORD: your_password
       DB_NAME: your_database
     ports:
-      - "5000:5000"
+      - "10799:5000"
 
 volumes:
   mysql_data:
