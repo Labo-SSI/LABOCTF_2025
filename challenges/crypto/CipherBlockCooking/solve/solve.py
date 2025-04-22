@@ -3,14 +3,18 @@ from Crypto.Util.Padding import pad, unpad
 
 context.log_level = "error"
 
-p = process(["python", "server.py"])
+# p = process(["python", "server.py"])
+
+p = remote("127.0.0.1", 10101)
 
 token = p.recvuntil(b": ")
 
 p.sendline(b"1")
 
+p.recvuntil(b"token:")
 p.recvline()
 hex_token = p.recvline(keepends=False).decode()
+# print(hex_token)
 token = bytes.fromhex(hex_token)
 
 original_iv = token[:16]
@@ -31,4 +35,5 @@ p.recvuntil(b": ")
 
 p.sendline(new_token_hex.encode())
 
+p.recvline()
 print(p.recvline(keepends=False).decode())

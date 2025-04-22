@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  challenge:
+    build: .
+    ports:
+      - "10101:1234"
+    restart: unless-stopped
